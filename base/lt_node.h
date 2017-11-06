@@ -6,6 +6,9 @@
  * @date 2017-09-21
  */
 
+#ifndef _LT_NODE_H_
+#define _LT_NODE_H_
+
 namespace lt
 {
 
@@ -23,5 +26,21 @@ struct LinkNode
     LinkNode<T>     *next;
 };
 
+template<class T>
+struct DoubleLinkNode
+{
+    DoubleLinkNode()
+        : data(), prev(nullptr), next(nullptr) {}
+    DoubleLinkNode(const T &element)
+        : data(element), prev(nullptr), next(nullptr) {}
+    DoubleLinkNode(const T &element, DoubleLinkNode<T> *prev_ptr, DoubleLinkNode<T> *next_ptr)
+        : data(element), prev(prev_ptr), next(next_ptr) {}
+    T               data;
+    DoubleLinkNode<T>   *prev;
+    DoubleLinkNode<T>   *next;
 };
+
+};
+
+#endif
 

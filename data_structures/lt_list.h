@@ -13,6 +13,7 @@
 #include <sstream>
 #include "base/lt_node.h"
 #include "base/noncopyable.h"
+#include "base/lt_exception.h"
 
 namespace lt
 {
@@ -33,11 +34,25 @@ public:
     void push_front(const T &element);
 
     /**
+     * @brief 移除最前位置节点，并返回元素值
+     *
+     * @return 元素值
+     */
+    const T pop_front();
+
+    /**
      * @brief 在最后位置追加元素
      *
      * @param element
      */
     void push_back(const T &element);
+
+    /**
+     * @brief 在最后位置移除节点，并返回元素值
+     *
+     * @return 
+     */
+    const T pop_back();
 
     /**
      * @brief 在指定位置之后插入一个元素
@@ -93,6 +108,8 @@ public:
      */
     uint32_t size() const { return _size; }
 
+    bool empty() { return _size == 0; }
+
 private:
     void valid_index_value(int index);
 
@@ -126,7 +143,7 @@ void LinkList<T>::valid_index_value(int index)
     {
         std::ostringstream s;
         s << "out of range : index = " << index << " size = " << _size;
-        //throw Exception(s.str().c_str())
+        throw Exception(s.str().c_str());
     }
 }
 
@@ -137,9 +154,39 @@ void LinkList<T>::push_front(const T &element)
 }
 
 template<class T>
+const T LinkList<T>::pop_front()
+{
+    if (empty())
+        throw Exception("empty list exception");
+    LinkedPtr ptr = _head->next;  
+    _head->next = ptr->next;
+    T element = ptr->data;
+    delete ptr;
+    return element;
+}
+
+template<class T>
 void LinkList<T>::push_back(const T &element)
 {
     insert_after(element, _size);
+}
+
+template<class T>
+const T LinkList<T>::pop_back()
+{
+    if (empty())
+        throw Exception("empty list exception");
+    LinkedPtr ptr = _head;    
+    int pos = _size - 1;
+    while(ptr->next && pos != 0)
+    {
+        ptr = ptr->next;
+        pos--;
+    }
+    ptr->next = ptr->next->next; 
+    T element = ptr->next->data;
+    delete ptr->next;
+    return element;
 }
 
 template<class T>
@@ -246,6 +293,25 @@ void LinkList<T>::reverse()
    }
    _head->next = prev;
 }
+
+template<class T>
+class DoubleList : public noncopyable
+{
+    typedef DoubleLinkNode<T>* DoubleLinkedPtr;
+public: 
+    DoubleList();
+    virtual ~DoubleList();
+
+    void push_front(const T &element);
+    void push_back(const T &element);
+
+
+private:
+    void valid_index_value(int index);
+
+    DoubleLinkedPtr     _head;
+    DoubleLinkedPtr     _tail;
+};
 
 };
 
