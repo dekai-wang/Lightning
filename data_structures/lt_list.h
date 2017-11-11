@@ -106,14 +106,14 @@ public:
      *
      * @return 大小
      */
-    uint32_t size() const { return _size; }
+    size_t size() const { return _size; }
 
     bool empty() { return _size == 0; }
 
 private:
     void valid_index_value(int index);
 
-    uint32_t        _size; 
+    size_t          _size; 
     LinkedPtr       _head;
 };
 

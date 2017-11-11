@@ -26,7 +26,7 @@ INCPATH ?= -I. -I$(BASE_DIR) -I$(ROOT)/data_structures
 SRCDIRS := sample
 
 ## 可执行目标程序
-TARGETS = list_sample 
+TARGETS = bstree_sample
 
 ifeq ($(DEBUG), 1)
 	    CXXFLAGS += -g
@@ -43,6 +43,15 @@ LIBS = -lm
 all: $(TARGETS)
 
 list_sample: $(SRCDIRS)/list.cpp
+	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
+
+queue_sample: $(SRCDIRS)/queue.cpp
+	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
+
+stack_sample: $(SRCDIRS)/stack.cpp
+	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
+
+bstree_sample: $(SRCDIRS)/bstree.cpp
 	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
 		
 #-------------------------------------

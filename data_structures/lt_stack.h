@@ -24,7 +24,7 @@ class Stack : public noncopyable
     typedef LinkNode<T>* LinkedPtr;
 public:
     Stack();
-    virtual Stack();
+    virtual ~Stack();
 
     void push(const T& element);
 
@@ -32,24 +32,24 @@ public:
 
     const T top();
 
-    uint32_t size();
+    size_t size();
 
     bool empty();
 
 private:
-    uint32_t        _size;
+    size_t          _size;
     LinkedPtr       _top;
 };
 
 template<class T>
-Stack::Stack()
+Stack<T>::Stack()
 {
     _size = 0;
     _top = nullptr;
 }
 
 template<class T>
-Stack::~Stack()
+Stack<T>::~Stack()
 {
     while(_top->next)
     {
@@ -61,14 +61,14 @@ Stack::~Stack()
 }
 
 template<class T>
-void Stack::push(const T& element)
+void Stack<T>::push(const T& element)
 {
     _top = new LinkNode<T>(element, _top);
     _size++;
 }
 
 template<class T>
-const T Stack::pop()
+const T Stack<T>::pop()
 {
     if (empty())
         throw Exception("empty stack exception");
@@ -81,7 +81,7 @@ const T Stack::pop()
 }
 
 template<class T>
-const T Stack::top()
+const T Stack<T>::top()
 {
     if (empty())
         throw Exception("empty stack exception");
@@ -89,19 +89,19 @@ const T Stack::top()
 }
 
 template<class T>
-uint32_t Stack::size()
+size_t Stack<T>::size()
 {
     return _size;
 }
 
 template<class T>
-bool Stack::empty()
+bool Stack<T>::empty()
 {
     if (_size == 0)
         return true;
     return false;
 }
 
-}
+};
 
 #endif
