@@ -3,7 +3,6 @@
 SRCEXTS := .c .cc .cpp .cxx
 
 ## 指定C/C++编译器
-CC 		:= gcc
 CXX 	:= g++
 LINK 	:= g++
 
@@ -14,13 +13,11 @@ MYCFLAGS 	:= -DDEBUG
 
 ROOT=$(shell pwd)
 
-BASE_DIR=$(ROOT)/base
-
 ## DEBUG开关选项
 DEBUG   := 1
 
 ## 头文件搜索路径
-INCPATH ?= -I. -I$(BASE_DIR) -I$(ROOT)/data_structures
+INCPATH ?= -I. -I$(ROOT)/base -I$(ROOT)/data_structures
 
 ## 源代码子目录
 SRCDIRS := sample
