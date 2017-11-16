@@ -44,11 +44,11 @@ template<class T>
 struct TreeNode
 {
     TreeNode()
-        : data(), left(nullptr), right(nullptr) { height = -1; }
+        : data(), left(nullptr), right(nullptr) { height = 0; }
     TreeNode(const T& element)
-        : data(element), left(nullptr), right(nullptr) { height = -1; }
+        : data(element), left(nullptr), right(nullptr) { height = 0; }
     TreeNode(const T& element, TreeNode<T>* left_ptr, TreeNode<T>* right_ptr)
-        : data(element), left(left_ptr), right(right_ptr) { height = -1; }
+        : data(element), left(left_ptr), right(right_ptr) { height = 0; }
     T               data;
     TreeNode<T>*    left;
     TreeNode<T>*    right;

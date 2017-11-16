@@ -113,14 +113,14 @@ void BSTree<T>::remove(const T& element)
     {
         if (node->left == nullptr)
         {
-            if (element < node->data)
+            if (node->data < parent->data)
                 parent->left = node->right;
             else
                 parent->right = node->right;
         }
         else if (node->right == nullptr)
         {
-            if (element < node->data)
+            if (node->data < parent->data)
                 parent->left = node->left;
             else
                 parent->right = node->left;
@@ -134,11 +134,20 @@ void BSTree<T>::remove(const T& element)
                 leftParent = left;
                 left = left->left;
             }
-            node->data = left->data;
-            if (leftParent->left == left)
+            if (leftParent->left != left)
+            {
                 leftParent->left = left->right;
+                left->left = node->left;
+                left->right = node->right;
+            }
             else
-                leftParent->right = left->right;
+            {
+                left->left = node->left;
+            }
+            if (element < parent->data)
+                parent->left = left;
+            else
+                parent->right = left;
         }
         delete node;
     }

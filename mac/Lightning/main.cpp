@@ -23,8 +23,6 @@ int main(int argc, const char * argv[]) {
     for (int i = 1; i < 7; i++)
         avl.insert(i);
     
-    avl;
-    
     std::cout << "Hello, World!\n";
     return 0;
 }

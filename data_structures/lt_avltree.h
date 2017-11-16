@@ -1,6 +1,6 @@
 /**
  * @file lt_avltree.h
- * @brief 
+ * @brief AVL树
  * @author dekai.wang
  * @version 
  * @date 2017-11-10
@@ -32,7 +32,7 @@ public:
     TreeNode<T>* find(const T& element);
 
 private:
-    void _destroy();
+    void _destroy(const TreeNode<T>* node);
     int _height(const TreeNode<T>* node);
     TreeNode<T>* _singleRotateWithLeft(TreeNode<T>* node);
     TreeNode<T>* _singleRotateWithRight(TreeNode<T>* node);
@@ -93,6 +93,22 @@ TreeNode<T>* AVLTree<T>::insert(const T& element, TreeNode<T>* node)
     node->height = std::max(height(node->right), height(node->left)) + 1;
 
     return node;
+}
+
+template<class T>
+void AVLTree<T>::remove(const T& element)
+{
+
+}
+
+template<class T>
+void AVLTree<T>::_destroy(const TreeNode<T>* node)
+{
+    if (!node)
+        return;
+    _destroy(node->left);
+    _destroy(node->right);
+    delete node;
 }
 
 template<class T>
