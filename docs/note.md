@@ -1,0 +1,191 @@
+# 数学知识复习
+
+- 指数
+
+```math
+x^Ax^B = x^{AB}
+
+\frac{x^A}{x^B} = x^{A-B}
+
+2^N + 2^N = 2^{N+1}
+```
+
+- 对数
+
+```math
+x^A = B
+
+\log_{x}B = A
+```
+
+- 级数
+
+```math
+\sum_{i=0}^{N}2^i = 2^{N+1} - 1
+
+\sum_{i=1}^{N}i = \frac{N^2}{2}
+
+\sum_{i=1}^{N}i^2 = \frac{N^3}{3}
+
+\sum_{i=1}^{N}i^k = \frac{N^{k+1}}{k+1}
+```
+
+# 递归的基本法则
+1. 基准情形。必须总有某些情形，它无须递归就能解出。
+2. 不断推进。对于那些需要递归求解情形，每一次递归调用都必须要使求解状况朝着接近基准情形的方向推进。
+3. 设计法则。假设所有的递归调用都能运行。
+4. 合成效益法则。在求解一个问题的同一实例时，切勿在不同的递归调用中做重复性的工作
+
+# 算法复杂度
+## 一般法则
+1. 法则1:for循环
+    一次for循环的运行时间至多是该for循环内语句的运行时间乘以迭代次数。
+2. 法则2:嵌套的for循环
+    一组嵌套的for循环内部的一条语句总的运行时间为该语句的运行时间乘以该组所有的for循环的大小的乘积
+3. 法则3:顺序语句
+    将各个语句的运行时间求和
+4. 法则4:if／else语句
+    一个if／else语句的运行时间不会超过判断加上case中运行时间长者的总的运行时间。
+## 增长率
+```math
+
+\log{N}
+
+{N}\log{N}
+
+{N}
+
+N^2
+
+N^3
+```
+## 最大子序和
+- 算法1
+```c
+int MaxSubsequenceSum(const int A[], int N)
+{
+    int ThisNum, MaxNum, i, j, k;
+    MaxNum = 0;
+    for (i = 0; i < N; i++)
+    {
+        for (j = i; i < N; j++)
+        {
+            ThisNum = 0;
+            for (k = i; k < j; k++)
+                ThisNum += A[k];
+            if (ThisNum > MaxNum)
+                MaxNum = ThisNum;
+        }
+    }
+}
+
+```
+```math
+	\theta(N^3)
+```
+- 算法2
+```c
+int MaxSubsequenceSum(const int A[], int N)
+{
+    int ThisNum, MaxNum, i, j;
+    MaxNum = 0;
+    for (i = 0; i < N; i++)
+    {
+        for (j = i; i < N; j++)
+        {
+            ThisNum += A[k];
+            if (ThisNum > MaxNum)
+                MaxNum = ThisNum;
+        }
+    }
+}
+
+```
+```math
+	\theta(N^2)
+```
+- 算法3(递归分治策略)
+```c
+int MaxSubSum(const int A[], int Left, int Right)
+{
+    if (left == Right)
+        if (A[left] > 0)
+            return A[Right];
+        else
+            return 0;
+    
+    int Center = (Left + Right) / 2
+    int MaxLeftSum = MaxSubSum(A, Left, Center);
+    int MaxRightSum = MaxSubSum(A, Center, Right);
+    
+    int MaxLeft = 0; int LeftSum = 0;
+    for (int i = Center; i >= Left; i--)
+    {
+        LeftSum += A[i];
+        if (LeftSum > MaxLeft)
+            MaxLeft = LeftSum;
+    }
+    
+    int MaxRight = 0; int RightSum = 0;
+    for (int i = Center; i <= Right; i++)
+    {
+        RightSum += A[i];
+        if (RightSum > MaxRight)
+            MaxRight = RightSum;
+    }
+    
+    return Max3(MaxLeftSum, MaxRightSum, MaxLeft + MaxRight);
+}
+
+int MaxSubsequenceSum(const int A[], int N)
+{
+    return MaxSubSum(A, 0, N - 1)
+}
+
+```
+```math
+	\theta(N\log{N})
+```
+- 算法4
+```c
+int MaxSubsequenceSum(const int A[], int N)
+{
+    int ThisSum = 0; int MaxSum = 0;
+    for (int i = 0; i < N; i++)
+    {
+        ThisSum += A[i];
+        if (ThisSum > MaxSum)
+            MaxSum = ThisSum;
+        else if (ThisSum < MaxSum)
+            ThisSum = 0;
+    }
+}
+
+```
+```math
+	\theta(N)
+```
+## 运行时间中的对数
+- 一般法则：如果一个算法用常数时间(O(1))将问题大小消减为其一部分(通常是1/2)，那么该算法就是O(logN)。如果使用常数时间只是把问题减少一个常数(如将问题减少1)，那么这种算法就是O(N)的。
+- 对分查找
+```c
+int BinarySearch(const int A[], int N, int X)
+{
+    int low, mid, high;
+    low = 0; high = N -1;
+    while (low <= high)
+    {
+        mid = (low + high) / 2;
+        if (A[mid] < X)
+            low = mid + 1;
+        else if (A[mid] > X)
+            high = mid - 1;
+        else
+            return mid;
+    }
+    return -1;
+}
+```
+```math
+	\theta(\log{N})
+```

@@ -7,7 +7,6 @@ CXX 	:= g++
 LINK 	:= g++
 
 ## 编译器选项
-CFLAGS 		:= -Wall -fPIC
 CXXFLAGS 	:= --std=c++11 -Wall -fPIC
 MYCFLAGS 	:= -DDEBUG
 
