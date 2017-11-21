@@ -16,13 +16,16 @@ template<class T>
 struct LinkNode
 {
     LinkNode() 
-        : data(), next(nullptr) {}
+        : data(), next(nullptr), key(nullptr) {}
     LinkNode(const T& element) 
-        : data(element), next(nullptr) {}
+        : data(element), next(nullptr), key(nullptr) {}
     LinkNode(const T& element, LinkNode<T>* next_ptr) 
-        : data(element), next(next_ptr) {}
+        : data(element), next(next_ptr), key(nullptr) {}
+    LinkNode(const T& element, LinkNode<T>* next_ptr, const char* key_str) 
+        : data(element), next(next_ptr), key(key_str) {}
     ~LinkNode() { next = nullptr; }
     T               data;
+    const char*     key;
     LinkNode<T>*    next;
 };
 
