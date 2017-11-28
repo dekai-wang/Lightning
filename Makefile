@@ -22,7 +22,7 @@ INCPATH ?= -I. -I$(ROOT)/base -I$(ROOT)/data_structures
 SRCDIRS := sample
 
 ## 可执行目标程序
-TARGETS = bstree_sample
+TARGETS = list_sample
 
 ifeq ($(DEBUG), 1)
 	    CXXFLAGS += -g

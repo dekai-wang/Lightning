@@ -3,103 +3,70 @@
  * @brief 栈
  * @author dekai.wang
  * @version 
- * @date 2017-10-30
  */
 
 #ifndef _LT_STACK_H_
 #define _LT_STACK_H_
 
-#include <iostream>
-#include <sstream>
-#include "base/lt_node.h"
-#include "base/noncopyable.h"
 #include "base/lt_exception.h"
+#include "base/lt_noncopyable.h"
+#include "data_structures/lt_deque.h"
 
 namespace lt
 {
 
-template<class T>
+template<class T, class Container = lt::Deque<T> >
 class Stack : public noncopyable
 {
-    typedef LinkNode<T>* LinkedPtr;
 public:
     Stack();
     virtual ~Stack();
 
     void push(const T& element);
 
-    const T pop();
+    const T& pop();
 
-    const T top();
+    const T& top();
 
-    size_t size();
+    size_t size() { return _con.size(); }
 
-    bool empty();
-
+    bool empty() { return _con.empty(); }
 private:
-    size_t          _size;
-    LinkedPtr       _top;
+    Container   _con;
 };
 
-template<class T>
-Stack<T>::Stack()
+template<class T, class Container>
+Stack<T, Container>::Stack()
 {
-    _size = 0;
-    _top = nullptr;
+
 }
 
-template<class T>
-Stack<T>::~Stack()
+template<class T, class Container>
+Stack<T, Container>::~Stack()
 {
-    while(_top->next)
-    {
-        LinkedPtr ptr = _top->next;
-        _top->next = ptr->next;
-        delete ptr;
-    }
-    delete _top;
+    
 }
 
-template<class T>
-void Stack<T>::push(const T& element)
+template<class T, class Container>
+void Stack<T, Container>::push(const T& element)
 {
-    _top = new LinkNode<T>(element, _top);
-    _size++;
+    _con.push_front(element);
 }
 
-template<class T>
-const T Stack<T>::pop()
+template<class T, class Container>
+const T& Stack<T, Container>::pop()
 {
-    if (empty())
-        throw Exception("empty stack exception");
-    LinkedPtr ptr = _top;
-    _top = ptr->next;
-    T element = ptr->data;
-    delete ptr;
-    _size--;
-    return element;
+    const T ele = _con.front();
+    _con.pop_front();
+    return ele;
 }
 
-template<class T>
-const T Stack<T>::top()
+template<class T, class Container>
+const T& Stack<T, Container>::top()
 {
-    if (empty())
-        throw Exception("empty stack exception");
-    return _top->data;
-}
-
-template<class T>
-size_t Stack<T>::size()
-{
-    return _size;
-}
-
-template<class T>
-bool Stack<T>::empty()
-{
-    if (_size == 0)
-        return true;
-    return false;
+    const T ele = _con.front();
+    _con.pop_front();
+    return ele;
 }
 
 };

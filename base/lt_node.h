@@ -3,7 +3,6 @@
  * @brief 数据结构链路节点
  * @author dekai.wang
  * @version 
- * @date 2017-09-21
  */
 
 #ifndef _LT_NODE_H_

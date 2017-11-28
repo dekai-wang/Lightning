@@ -3,7 +3,6 @@
  * @brief 二叉搜索树
  * @author dekai.wang
  * @version 
- * @date 2017-11-07
  */
 
 #ifndef _LT_BTREE_H_
@@ -13,7 +12,7 @@
 #include <sstream>
 #include "base/lt_node.h"
 #include "base/lt_exception.h"
-#include "base/noncopyable.h"
+#include "base/lt_noncopyable.h"
 
 namespace lt
 {

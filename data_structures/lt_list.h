@@ -1,135 +1,79 @@
 /**
-* @file lt_list
-* @brief 链表
-* @author dekai.wang
-* @version 
-* @date 2017-09-21
-*/
+ * @file lt_list.h
+ * @brief 
+ * @author dekai.wang
+ * @version 
+ */
 
 #ifndef _LT_LIST_H_
 #define _LT_LIST_H_
 
-#include <iostream>
-#include <sstream>
-#include "base/lt_node.h"
-#include "base/noncopyable.h"
 #include "base/lt_exception.h"
+#include "base/lt_noncopyable.h"
 
 namespace lt
 {
 
 template<class T>
-class LinkList : public noncopyable
+class List : public noncopyable
 {
-    typedef LinkNode<T>* LinkedPtr;
 public:
-    LinkList();
-    virtual ~LinkList();
+    List();
+    virtual ~List();
 
-    /**
-     * @brief 在最前位置添加元素
-     *
-     * @param element
-     */
-    void push_front(const T &element);
+    const T& front();
 
-    /**
-     * @brief 移除最前位置节点，并返回元素值
-     *
-     * @return 元素值
-     */
-    const T pop_front();
+    void push_front(const T& element);
 
-    /**
-     * @brief 在最后位置追加元素
-     *
-     * @param element
-     */
-    void push_back(const T &element);
+    void pop_front();
 
-    /**
-     * @brief 在最后位置移除节点，并返回元素值
-     *
-     * @return 
-     */
-    const T pop_back();
+    void insert_after(size_t pos, const T& element);
 
-    /**
-     * @brief 在指定位置之后插入一个元素
-     *
-     * @param element 元素
-     * @param pos 位置
-     * @return 成功失败
-     */
-    bool insert_after(const T &element, int pos);
+    void erase_after(size_t pos);
 
-    /**
-     * @brief 删除指定位置的元素
-     *
-     * @param pos
-     * @return 成功失败
-     */
-    bool erase(int pos);
+    void remove(const T& element);
 
-    /**
-     * @brief 删除指定区间的元素
-     *
-     * @param begin 
-     * @param end
-     * @return 成功失败
-     */
-    bool erase(int begin, int end);
+    void merge(const List& other);
 
-    /**
-     * @brief 反转
-     *
-     * @param 
-     */
-    void reverse();
+    template<class Compare> void merge(const List& other, Compare comp);
 
-    /**
-     * @brief 清理全部元素 
-     */
+    template<class Compare> void sort();
+
     void clear();
 
-    /**
-     * @brief 获取指定位置的元素 
-     *
-     * @param pos
-     *
-     * @return 
-     */
-    const T& get(int pos);
+    bool empty();
 
-    /**
-     * @brief 
-     *
-     * @return 大小
-     */
-    size_t size() const { return _size; }
+    size_t size();
 
-    bool empty() { return _size == 0; }
+    void reserve();
 
 private:
-    void valid_index_value(int index);
-
-    size_t          _size; 
-    LinkedPtr       _head;
+    typedef struct Node
+    {
+        Node() : data(), next(nullptr) {}
+        Node(const T& element) : data(element), next(nullptr) {}
+        Node(const T& element, Node* next_ptr) : data(element), next(next_ptr) {}
+        T       data;
+        Node*   next;
+    }*LinkPtr;
+    LinkPtr         _head;
+    size_t          _size;
 };
 
 template<class T>
-LinkList<T>::LinkList() 
+List<T>::List()
 {
-    _head = new LinkNode<T>();
+    _head = new Node(); 
     _size = 0;
 }
 
 template<class T>
-LinkList<T>::~LinkList()
+List<T>::~List()
 {
-    while (_head->next)
+    LinkPtr ptr = _head; 
+    while(_head->next)
     {
-        LinkedPtr ptr = _head->next;
+        ptr = _head->next;
         _head->next = ptr->next;
         delete ptr;
     }
@@ -137,182 +81,85 @@ LinkList<T>::~LinkList()
 }
 
 template<class T>
-void LinkList<T>::valid_index_value(int index)
+const T& List<T>::front()
 {
-    if (index < 0 || index > _size) 
-    {
-        std::ostringstream s;
-        s << "out of range : index = " << index << " size = " << _size;
-        throw Exception(s.str().c_str());
-    }
+    if (empty())  
+        throw Exception("");
+    return _head->next->data;
 }
 
 template<class T>
-void LinkList<T>::push_front(const T &element)
+void List<T>::push_front(const T& element)
 {
-    insert_after(element, 0);
-}
-
-template<class T>
-const T LinkList<T>::pop_front()
-{
-    if (empty())
-        throw Exception("empty list exception");
-    LinkedPtr ptr = _head->next;  
-    _head->next = ptr->next;
-    T element = ptr->data;
-    delete ptr;
-    return element;
-}
-
-template<class T>
-void LinkList<T>::push_back(const T &element)
-{
-    insert_after(element, _size);
-}
-
-template<class T>
-const T LinkList<T>::pop_back()
-{
-    if (empty())
-        throw Exception("empty list exception");
-    LinkedPtr ptr = _head;    
-    int pos = _size - 1;
-    while(ptr->next && pos != 0)
-    {
-        ptr = ptr->next;
-        pos--;
-    }
-    ptr->next = ptr->next->next; 
-    T element = ptr->next->data;
-    delete ptr->next;
-    return element;
-}
-
-template<class T>
-bool LinkList<T>::insert_after(const T &element, int pos)
-{
-    valid_index_value(pos);
-    LinkedPtr ptr = _head;    
-    while (ptr->next && pos != 0)
-    {
-        ptr = ptr->next;
-        pos--;
-    }
-
-    LinkedPtr node = new LinkNode<T>(element);
-    node->next = ptr->next;
-    ptr->next = node;
+    _head->next = new Node(element, _head->next);
     _size++;
-
-    return true;
 }
 
 template<class T>
-bool LinkList<T>::erase(int pos)
+void List<T>::pop_front()
 {
-    valid_index_value(pos);
-    LinkedPtr ptr = _head;    
-    while (ptr->next && pos != 0)
+    if (empty())  
+        throw Exception("");
+    _head->next = _head->next->next;
+    delete _head->next;;
+}
+
+template<class T>
+void List<T>::insert_after(size_t pos, const T& element)
+{
+    if (empty())  
+        throw Exception("");
+    if (pos > _size)
+        throw Exception("");
+    LinkPtr ptr = _head; 
+    while(ptr->next && pos > 0)
     {
-        ptr = ptr->next;
+        ptr = _head->next;
         pos--;
     }
-    LinkedPtr node = ptr->next;
+    ptr->next = new Node(element, ptr->next);
+    _size++;
+}
+
+template<class T>
+void List<T>::erase_after(size_t pos)
+{
+    if (empty())  
+        throw Exception("");
+    if (pos > _size)
+        throw Exception("");
+    LinkPtr ptr = _head; 
+    while(ptr->next && pos > 0)
+    {
+        ptr = _head->next;
+        pos--;
+    }
+    LinkPtr node = ptr->next;
     ptr->next = node->next;
     delete node;
-    _size--;
-
-    return true;
+}
+    
+template<class T>
+void List<T>::remove(const T& element)
+{
 }
 
 template<class T>
-bool LinkList<T>::erase(int begin, int end)
+void List<T>::reserve()
 {
-    if (begin > end)
-        return false;
-    valid_index_value(begin);
-    valid_index_value(end);
-
-    LinkedPtr ptr = _head;
-    while(ptr->next && begin != 1)
+    LinkPtr ptr = _head->next;
+    LinkPtr prev = nullptr;
+    while(ptr)
     {
-        ptr = ptr->next;
-        begin--;
-        end--;
+        LinkPtr node = ptr->next; 
+        ptr->next = prev;
+        prev = ptr;
+        ptr->node;
     }
-
-    while(end != 0)
-    {
-        LinkedPtr node = ptr->next;
-        ptr->next = node->next;
-        delete node;
-        _size--;
-        end--;
-    }
-
-    return true;
+    _head->next = prev;
 }
 
-template<class T>
-void LinkList<T>::clear()
-{
-    while (_head->next)
-    {
-        LinkedPtr ptr = _head->next;
-        _head->next = ptr->next;
-        delete ptr;
-    }
-    _size = 0;
 }
-
-template<class T>
-const T& LinkList<T>::get(int pos)
-{
-    valid_index_value(pos);
-    LinkedPtr ptr = _head;
-    while (ptr->next && pos != 0)
-    {
-        ptr = ptr->next;
-        pos--;
-    }
-    return ptr->data;
-}
-
-template<class T>
-void LinkList<T>::reverse()
-{
-   LinkedPtr ptr = _head->next; 
-   LinkedPtr prev = nullptr;
-   while(ptr)
-   {
-       LinkedPtr node = ptr->next;
-       ptr->next = prev;
-       prev = ptr;
-       ptr = node;
-   }
-   _head->next = prev;
-}
-
-template<class T>
-class DoubleList : public noncopyable
-{
-    typedef DoubleLinkNode<T>* DoubleLinkedPtr;
-public: 
-    DoubleList();
-    virtual ~DoubleList();
-
-    void push_front(const T &element);
-    void push_back(const T &element);
-
-
-private:
-    void valid_index_value(int index);
-
-    DoubleLinkedPtr     _head;
-    DoubleLinkedPtr     _tail;
-};
-
-};
 
 #endif
+

@@ -3,11 +3,13 @@
  * @brief 不可复制对象基类
  * @author dekai.wang
  * @version 
- * @date 2017-09-21
  */
 
 #ifndef _NONCOPYABLE_H_
 #define _NONCOPYABLE_H_
+
+namespace lt
+{
 
 namespace base
 {
@@ -25,6 +27,8 @@ private:
 
 }
 
-typedef base::_noncopyable noncopyable;
+}
+
+typedef lt::base::_noncopyable noncopyable;
 
 #endif //noncopyable.h

@@ -3,7 +3,6 @@
  * @brief AVL树
  * @author dekai.wang
  * @version 
- * @date 2017-11-10
  */
 
 #ifndef _LT_AVLTREE_H_
@@ -11,7 +10,7 @@
 
 #include <algorithm>
 #include "base/lt_node.h"
-#include "base/noncopyable.h"
+#include "base/lt_noncopyable.h"
 #include "base/lt_exception.h"
 
 namespace lt

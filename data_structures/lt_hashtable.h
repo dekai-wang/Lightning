@@ -3,7 +3,6 @@
 * @brief hash表
 * @author dekai.wang
 * @version 
-* @date 2017-11-20
 */
 
 #ifndef _LT_HASH_TABLE_H_
@@ -11,7 +10,7 @@
 
 #include "base/lt_node.h"
 #include "base/lt_exception.h"
-#include "base/noncopyable.h"
+#include "base/lt_noncopyable.h"
 
 namespace lt
 {

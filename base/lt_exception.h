@@ -3,14 +3,13 @@
  * @brief 
  * @author dekai.wang
  * @version 
- * @date 2017-10-30
  */
 
 #ifndef _LT_EXCEPTION_H_
 #define _LT_EXCEPTION_H_
 
-#include <exception>
 #include <string>
+#include <exception>
 
 namespace lt
 {

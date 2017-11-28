@@ -3,86 +3,76 @@
  * @brief 队列
  * @author dekai.wang
  * @version 
- * @date 2017-11-07
  */
 
 #ifndef _LT_QUEUE_H_
 #define _LT_QUEUE_H_
 
-#include <iostream>
-#include <sstream>
-#include "base/lt_node.h"
-#include "base/noncopyable.h"
 #include "base/lt_exception.h"
+#include "base/lt_noncopyable.h"
+#include "data_structures/lt_deque.h"
 
 namespace lt
 {
 
-template<class T>
+template<class T, class Container = lt::Deque<T> >
 class Queue : public noncopyable
 {
-    typedef LinkNode<T>* LinkedPtr;
 public:
     Queue();
     virtual ~Queue();
 
+    const T& front();
+
+    const T& back();
+
     void enqueue(const T& element);
 
-    const T dequeue();
+    const T& dequeue();
 
-    size_t size() { return _size; }
+    size_t size() { return _con.size(); }
 
-    bool empty() { return _size == 0; }
+    bool empty() { return _con.empty(); }
 
 private:
-    LinkedPtr       _front;
-    LinkedPtr       _rear;
-    size_t          _size;
+    Container       _con;
 };
 
-template<class T>
-Queue<T>::Queue()
+template<class T, class Container>
+Queue<T, Container>::Queue()
 {
-    _front = _rear = new LinkNode<T>();
-    _size = 0;
+
 }
 
-template<class T>
-Queue<T>::~Queue()
+template<class T, class Container>
+Queue<T, Container>::~Queue()
 {
-    while(_front->next)
-    {
-        LinkedPtr ptr = _front->next;
-        _front->next = ptr->next; 
-        delete ptr;
-    }
-    delete _front;
+    
 }
 
-template<class T>
-void Queue<T>::enqueue(const T& element)
+template<class T, class Container>
+const T& Queue<T, Container>::front()
 {
-    LinkedPtr ptr = new LinkNode<T>(element);
-    _rear->next = ptr;
-    _rear = ptr;
-    _size++;
+    _con.front();
 }
 
-template<class T>
-const T Queue<T>::dequeue()
+template<class T, class Container>
+const T& Queue<T, Container>::back()
 {
-    if (_size == 0)
-        throw Exception("");
+    _con.back();    
+}
 
-    LinkedPtr ptr = _front->next;
-    _front->next = ptr->next; 
-    T element = ptr->data;
-    delete ptr;
-    _size--;
+template<class T, class Container>
+void Queue<T, Container>::enqueue(const T& element)
+{
+    _con.push_back(element);
+}
 
-    if (ptr == _rear)
-        _rear = _front;
-
+template<class T, class Container>
+const T& Queue<T, Container>::dequeue()
+{
+    const T element = _con.front();
+    _con.pop_front();
     return element;
 }
     
