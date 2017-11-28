@@ -22,7 +22,7 @@ INCPATH ?= -I. -I$(ROOT)/base -I$(ROOT)/data_structures
 SRCDIRS := sample
 
 ## 可执行目标程序
-TARGETS = list_sample
+TARGETS = stack_sample queue_sample list_sample bstree_sample hash_sample
 
 ifeq ($(DEBUG), 1)
 	    CXXFLAGS += -g
@@ -48,6 +48,9 @@ stack_sample: $(SRCDIRS)/stack.cpp
 	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
 
 bstree_sample: $(SRCDIRS)/bstree.cpp
+	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
+
+hash_sample: $(SRCDIRS)/hash.cpp
 	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
 		
 #-------------------------------------

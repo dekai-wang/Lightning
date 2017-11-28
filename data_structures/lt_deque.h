@@ -51,9 +51,9 @@ private:
             : data(element), prev(nullptr), next(nullptr) {}
         Node(const T& element, Node* prev_ptr, Node* next_ptr) 
             : data(element), prev(prev_ptr), next(next_ptr) {}
-        Node*   next;
-        Node*   prev;
         T       data;
+        Node*   prev;
+        Node*   next;
     }*LinkPtr;
     LinkPtr     _front;
     LinkPtr     _back;
@@ -61,15 +61,23 @@ private:
 };
 
 template<class T>
-Deque<T>::Deque()
+Deque<T>::Deque() : _front(nullptr), _back(nullptr), _size(0)
 {
-    _front = _back = nullptr;
 }
 
 template<class T>
 Deque<T>::~Deque()
 {
-    
+    if (!_front && !_back)    
+        return;
+    LinkPtr ptr = _front->next;
+    while(ptr)
+    {
+        LinkPtr node = ptr;
+        ptr = ptr->next;
+        delete node;
+    }
+    delete _front;
 }
 
 template<class T>

@@ -3,15 +3,13 @@
 
 int main()
 {
-    lt::BSTree<int> bstree;
+    lt::BSTree<int, int> bstree;
 
     for (int i = 1; i < 20; i++)
     {
-        bstree.insert(i);
+        bstree.insert(i, i);
     }
 
-    bstree.remove(5);
-    bstree.remove(9);
 
     return 0;
 }

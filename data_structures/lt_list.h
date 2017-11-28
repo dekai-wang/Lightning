@@ -10,6 +10,10 @@
 
 #include "base/lt_exception.h"
 #include "base/lt_noncopyable.h"
+#include "algorithm/lt_algo.h"
+#include "algorithm/lt_sort.h"
+
+#include <list>
 
 namespace lt
 {
@@ -33,17 +37,21 @@ public:
 
     void remove(const T& element);
 
-    void merge(const List& other);
+    void merge(const List<T>& other);
 
-    template<class Compare> void merge(const List& other, Compare comp);
+    template<class Compare> 
+    void merge(const List<T>& other, Compare comp);
 
-    template<class Compare> void sort();
+    void sort();
+
+    template<class Compare> 
+    void sort(Compare comp);
 
     void clear();
 
-    bool empty();
+    bool empty() { return _size == 0; }
 
-    size_t size();
+    size_t size() { return _size; }
 
     void reserve();
 
@@ -100,8 +108,10 @@ void List<T>::pop_front()
 {
     if (empty())  
         throw Exception("");
+    LinkPtr node = _head->next;
     _head->next = _head->next->next;
-    delete _head->next;;
+    delete node;
+    _size--;
 }
 
 template<class T>
@@ -137,11 +147,44 @@ void List<T>::erase_after(size_t pos)
     LinkPtr node = ptr->next;
     ptr->next = node->next;
     delete node;
+    _size--;
 }
     
 template<class T>
 void List<T>::remove(const T& element)
 {
+}
+
+template<class T>
+void List<T>::merge(const List<T>& other)
+{
+
+}
+
+template<class T>
+template<class Compare>
+void List<T>::merge(const List<T>& other, Compare comp)
+{
+
+}
+
+template<class T>
+void List<T>::sort()
+{
+    sort(lt::Less<T>());
+}
+
+template<class T>
+template<class Compare>
+void List<T>::sort(Compare comp)
+{
+    
+}
+
+template<class T>
+void List<T>::clear()
+{
+    
 }
 
 template<class T>

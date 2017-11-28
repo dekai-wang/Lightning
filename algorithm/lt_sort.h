@@ -29,7 +29,10 @@ public:
     static void QuickSort();
 
     template<class T>
-    static void ShellSort();
+    static void ShellSort()
+    {
+
+    }
 };
 
 };

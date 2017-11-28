@@ -23,6 +23,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		841812BA1FCD6F3B00E86731 /* algorithm */ = {isa = PBXFileReference; lastKnownFileType = folder; name = algorithm; path = ../algorithm; sourceTree = "<group>"; };
 		8469859A1FB5A54E007180A5 /* Lightning */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Lightning; sourceTree = BUILT_PRODUCTS_DIR; };
 		8469859D1FB5A54E007180A5 /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		846985A91FB5A766007180A5 /* base */ = {isa = PBXFileReference; lastKnownFileType = folder; name = base; path = ../base; sourceTree = "<group>"; };
@@ -43,6 +44,7 @@
 		846985911FB5A54E007180A5 = {
 			isa = PBXGroup;
 			children = (
+				841812BA1FCD6F3B00E86731 /* algorithm */,
 				846985A91FB5A766007180A5 /* base */,
 				846985AA1FB5A766007180A5 /* data_structures */,
 				8469859C1FB5A54E007180A5 /* Lightning */,

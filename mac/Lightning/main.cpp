@@ -7,22 +7,13 @@
 //
 
 #include <iostream>
-#include "lt_bstree.h"
-#include "lt_avltree.h"
+#include "lt_hash_table.h"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
+
+    lt::HashTable<const char*, int> h;
     
-    lt::BSTree<int> b;
-    for (int i = 0; i < 5; i++)
-        b.insert(i);
-    
-    b.remove(3);
-    
-    lt::AVLTree<int> avl;
-    for (int i = 1; i < 7; i++)
-        avl.insert(i);
-    
-    std::cout << "Hello, World!\n";
+    h.insert("123", 123);
     return 0;
 }

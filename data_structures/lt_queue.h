@@ -71,7 +71,7 @@ void Queue<T, Container>::enqueue(const T& element)
 template<class T, class Container>
 const T& Queue<T, Container>::dequeue()
 {
-    const T element = _con.front();
+    const T& element = _con.front();
     _con.pop_front();
     return element;
 }

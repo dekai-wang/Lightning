@@ -56,7 +56,7 @@ void Stack<T, Container>::push(const T& element)
 template<class T, class Container>
 const T& Stack<T, Container>::pop()
 {
-    const T ele = _con.front();
+    const T& ele = _con.front();
     _con.pop_front();
     return ele;
 }
@@ -64,8 +64,7 @@ const T& Stack<T, Container>::pop()
 template<class T, class Container>
 const T& Stack<T, Container>::top()
 {
-    const T ele = _con.front();
-    _con.pop_front();
+    const T& ele = _con.front();
     return ele;
 }
 
