@@ -22,7 +22,7 @@ INCPATH ?= -I. -I$(ROOT)/base -I$(ROOT)/data_structures
 SRCDIRS := sample
 
 ## 可执行目标程序
-TARGETS = stack_sample queue_sample list_sample bstree_sample hash_sample
+TARGETS = stack_sample queue_sample list_sample hash_sample bstree_sample avltree_sample sort_sample
 
 ifeq ($(DEBUG), 1)
 	    CXXFLAGS += -g
@@ -36,6 +36,7 @@ LIBS = -lm
 .PHONY: clean
 	.SUFFIXES:
 
+##目标
 all: $(TARGETS)
 
 list_sample: $(SRCDIRS)/list.cpp
@@ -51,6 +52,12 @@ bstree_sample: $(SRCDIRS)/bstree.cpp
 	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
 
 hash_sample: $(SRCDIRS)/hash.cpp
+	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
+
+avltree_sample: $(SRCDIRS)/avltree.cpp
+	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
+
+sort_sample: $(SRCDIRS)/sort.cpp
 	    $(CXX) -o $@ $^ $(CXXFLAGS) $(MYCFLAGS) $(INCPATH)
 		
 #-------------------------------------

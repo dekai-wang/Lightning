@@ -9,84 +9,83 @@
 #define _LT_AVLTREE_H_
 
 #include <algorithm>
-#include "base/lt_node.h"
 #include "base/lt_noncopyable.h"
 #include "base/lt_exception.h"
+#include "base/lt_node.h"
 
 namespace lt
 {
 
-template<class T>
+template<class K, class T>
 class AVLTree : public noncopyable
 {
 public:
     AVLTree();
     virtual ~AVLTree();
 
-    void insert(const T& element);
-    TreeNode<T>* insert(const T& element, TreeNode<T>* node);
+    void insert(const K& key, const T& element);
+    TreeNode<K, T>* insert(const K& key, const T& element, TreeNode<K, T>* node);
 
-    void remove(const T& element);
+    void remove(const T& key);
 
-    TreeNode<T>* find(const T& element);
+    TreeNode<K, T>* find(const T& key);
 
 private:
-    void _destroy(const TreeNode<T>* node);
-    int _height(const TreeNode<T>* node);
-    TreeNode<T>* _singleRotateWithLeft(TreeNode<T>* node);
-    TreeNode<T>* _singleRotateWithRight(TreeNode<T>* node);
-    TreeNode<T>* _doubleRotateWithLeft(TreeNode<T>* node);
-    TreeNode<T>* _doubleRotateWithRight(TreeNode<T>* node);
+    void destroy(const TreeNode<K, T>* node);
+    int height(const TreeNode<K, T>* node);
+    TreeNode<K, T>* singleRotateWithLeft(TreeNode<K, T>* node);
+    TreeNode<K, T>* singleRotateWithRight(TreeNode<K, T>* node);
+    TreeNode<K, T>* doubleRotateWithLeft(TreeNode<K, T>* node);
+    TreeNode<K, T>* doubleRotateWithRight(TreeNode<K, T>* node);
 
-
-    TreeNode<T>*       _root;
+    TreeNode<K, T>*       _root;
 };
 
-template<class T>
-AVLTree<T>::AVLTree()
+template<class K, class T>
+AVLTree<K, T>::AVLTree()
 {
     _root = nullptr;    
 }
 
-template<class T>
-AVLTree<T>::~AVLTree()
+template<class K, class T>
+AVLTree<K, T>::~AVLTree()
 {
-    
+    destroy(_root);
 }
 
-template<class T>
-void AVLTree<T>::insert(const T& element)
+template<class K, class T>
+void AVLTree<K, T>::insert(const K& key, const T& element)
 {
-    _root = insert(element, _root);
+    _root = insert(key, element, _root);
 }
 
-template<class T>
-TreeNode<T>* AVLTree<T>::insert(const T& element, TreeNode<T>* node)
+template<class K, class T>
+TreeNode<K, T>* AVLTree<K, T>::insert(const K& key, const T& element, TreeNode<K, T>* node)
 {
     if (!node)
     {
-        node = new TreeNode<T>(element);
+        node = new TreeNode<K, T>(key, element);
     }
-    else if (node->data < element)
+    else if (node->key < key)
     {
-        node->right = insert(element, node->right);
+        node->right = insert(key, element, node->right);
         if (height(node->right) - height(node->left) == 2)
         {
-            if (node->right->data < element)
-                node = _singleRotateWithRight(node);
+            if (node->right->key < key)
+                node = singleRotateWithRight(node);
             else
-                node = _doubleRotateWithRight(node);
+                node = doubleRotateWithRight(node);
         }
     }
     else
     {
-        node->left = insert(element, node->left);
+        node->left = insert(key, element, node->left);
         if (height(node->left) - height(node->right) == 2)
         {
-            if (node->left->data > element)
-                node = _singleRotateWithLeft(node);
+            if (node->left->key > key)
+                node = singleRotateWithLeft(node);
             else
-                node = _doubleRotateWithLeft(node);
+                node = doubleRotateWithLeft(node);
         }
     }
     node->height = std::max(height(node->right), height(node->left)) + 1;
@@ -94,24 +93,24 @@ TreeNode<T>* AVLTree<T>::insert(const T& element, TreeNode<T>* node)
     return node;
 }
 
-template<class T>
-void AVLTree<T>::remove(const T& element)
+template<class K, class T>
+void AVLTree<K, T>::remove(const T& element)
 {
 
 }
 
-template<class T>
-void AVLTree<T>::_destroy(const TreeNode<T>* node)
+template<class K, class T>
+void AVLTree<K, T>::destroy(const TreeNode<K, T>* node)
 {
     if (!node)
         return;
-    _destroy(node->left);
-    _destroy(node->right);
+    destroy(node->left);
+    destroy(node->right);
     delete node;
 }
 
-template<class T>
-int AVLTree<T>::_height(const TreeNode<T>* node)
+template<class K, class T>
+int AVLTree<K, T>::height(const TreeNode<K, T>* node)
 {
     if (node == nullptr)
         return -1;
@@ -119,10 +118,10 @@ int AVLTree<T>::_height(const TreeNode<T>* node)
         return node->height;
 }
 
-template<class T>
-TreeNode<T>* AVLTree<T>::_singleRotateWithLeft(TreeNode<T>* node)
+template<class K, class T>
+TreeNode<K, T>* AVLTree<K, T>::singleRotateWithLeft(TreeNode<K, T>* node)
 {
-    TreeNode<T>* left = node->left;
+    TreeNode<K, T>* left = node->left;
     node->left = left->right;
     left->right = node;
 
@@ -132,10 +131,10 @@ TreeNode<T>* AVLTree<T>::_singleRotateWithLeft(TreeNode<T>* node)
     return left;
 }
 
-template<class T>
-TreeNode<T>* AVLTree<T>::_singleRotateWithRight(TreeNode<T>* node)
+template<class K, class T>
+TreeNode<K, T>* AVLTree<K, T>::singleRotateWithRight(TreeNode<K, T>* node)
 {
-    TreeNode<T>* right = node->right;  
+    TreeNode<K, T>* right = node->right;  
     node->right = right->left;
     right->left = node;
 
@@ -145,20 +144,20 @@ TreeNode<T>* AVLTree<T>::_singleRotateWithRight(TreeNode<T>* node)
     return right;
 }
 
-template<class T>
-TreeNode<T>* AVLTree<T>::_doubleRotateWithLeft(TreeNode<T>* node)
+template<class K, class T>
+TreeNode<K, T>* AVLTree<K, T>::doubleRotateWithLeft(TreeNode<K, T>* node)
 {
-    node->left = _singleRotateWithRight(node->left);
+    node->left = singleRotateWithRight(node->left);
 
-    return _singleRotateWithLeft(node);
+    return singleRotateWithLeft(node);
 }
 
-template<class T>
-TreeNode<T>* AVLTree<T>::_doubleRotateWithRight(TreeNode<T>* node)
+template<class K, class T>
+TreeNode<K, T>* AVLTree<K, T>::doubleRotateWithRight(TreeNode<K, T>* node)
 {
-    node->left = _singleRotateWithLeft(node->left);
+    node->left = singleRotateWithLeft(node->left);
 
-    return _singleRotateWithRight(node);
+    return singleRotateWithRight(node);
 }
 
 };

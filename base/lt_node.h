@@ -11,50 +11,21 @@
 namespace lt
 {
 
-template<class T>
-struct LinkNode
+template<class K, class T>
+class TreeNode
 {
-    LinkNode() 
-        : data(), next(nullptr), key(nullptr) {}
-    LinkNode(const T& element) 
-        : data(element), next(nullptr), key(nullptr) {}
-    LinkNode(const T& element, LinkNode<T>* next_ptr) 
-        : data(element), next(next_ptr), key(nullptr) {}
-    LinkNode(const T& element, LinkNode<T>* next_ptr, const char* key_str) 
-        : data(element), next(next_ptr), key(key_str) {}
-    ~LinkNode() { next = nullptr; }
-    T               data;
-    const char*     key;
-    LinkNode<T>*    next;
-};
-
-template<class T>
-struct DoubleLinkNode
-{
-    DoubleLinkNode()
-        : data(), prev(nullptr), next(nullptr) {}
-    DoubleLinkNode(const T& element)
-        : data(element), prev(nullptr), next(nullptr) {}
-    DoubleLinkNode(const T& element, DoubleLinkNode<T>* prev_ptr, DoubleLinkNode<T>* next_ptr)
-        : data(element), prev(prev_ptr), next(next_ptr) {}
-    T                   data;
-    DoubleLinkNode<T>*  prev;
-    DoubleLinkNode<T>*  next;
-};
-
-template<class T>
-struct TreeNode
-{
+public:
     TreeNode()
-        : data(), left(nullptr), right(nullptr) { height = 0; }
-    TreeNode(const T& element)
-        : data(element), left(nullptr), right(nullptr) { height = 0; }
-    TreeNode(const T& element, TreeNode<T>* left_ptr, TreeNode<T>* right_ptr)
-        : data(element), left(left_ptr), right(right_ptr) { height = 0; }
-    T               data;
-    TreeNode<T>*    left;
-    TreeNode<T>*    right;
-    int             height;
+        : key(), data(), left(nullptr), right(nullptr) { height = 0; }
+    TreeNode(const K& k, const T& element)
+        : key(k), data(element), left(nullptr), right(nullptr) { height = 0; }
+    TreeNode(const K& k, const T& element, TreeNode<K, T>* left_ptr, TreeNode<K, T>* right_ptr)
+        : key(k), data(element), left(left_ptr), right(right_ptr) { height = 0; }
+    K                   key;
+    T                   data;
+    TreeNode<K, T>*     left;
+    TreeNode<K, T>*     right;
+    int                 height;
 };
 
 };
