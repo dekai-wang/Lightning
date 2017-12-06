@@ -26,12 +26,12 @@ public:
     template<class T, class Container = std::vector<T>, class Compare>
     static void InsertSort(Container& con, Compare com)
     {
-        for(size_t i = 1; i < con.size(); i++)
+        for (size_t i = 1; i < con.size(); i++)
         {
             T temp = con[i];
             size_t j = i;
-            for (; j > 0 && com(temp, con[j-1]); j--)
-                con[j] = con[j-1];
+            for (; j > 0 && com(temp, con[j - 1]); j--)
+                con[j] = con[j - 1];
             con[j] = temp;
         }
     }

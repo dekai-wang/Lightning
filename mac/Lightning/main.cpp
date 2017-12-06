@@ -7,13 +7,22 @@
 //
 
 #include <iostream>
-#include "lt_hash_table.h"
+#include "lt_priority_queue.h"
 
 int main(int argc, const char * argv[]) {
     // insert code here...
 
-    lt::HashTable<const char*, int> h;
+    lt::PriorityQueue<int> qu;
     
-    h.insert("123", 123);
+    for (int i = 1; i < 10; i++)
+    {
+        qu.insert(i);
+    }
+    
+    for (int i = 1; i < 10; i++)
+    {
+        std::cout << qu.erase_min() << std::endl;
+    }
+    
     return 0;
 }
