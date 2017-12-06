@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VariablesViewState
+   version = "1.0">
+   <ContextStates>
+      <ContextState
+         contextName = "lt::PriorityQueue&lt;int&gt;::PriorityQueue():lt_priority_queue.h">
+      </ContextState>
+      <ContextState
+         contextName = "lt::PriorityQueue&lt;int&gt;::erase_min():lt_priority_queue.h">
+      </ContextState>
+      <ContextState
+         contextName = "lt::PriorityQueue&lt;int&gt;::PriorityQueue(unsigned long):lt_priority_queue.h">
+      </ContextState>
+      <ContextState
+         contextName = "main:main.cpp">
+      </ContextState>
+      <ContextState
+         contextName = "lt::PriorityQueue&lt;int&gt;::insert(int const&amp;):lt_priority_queue.h">
+      </ContextState>
+   </ContextStates>
+</VariablesViewState>
