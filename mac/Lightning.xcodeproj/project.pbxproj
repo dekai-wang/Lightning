@@ -243,6 +243,7 @@
 					"$(SRCROOT)/base",
 					"$(SRCROOT)/data_structures",
 					"$(SRCROOT)",
+					"$(SRCROOT)/algorithm",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -256,6 +257,7 @@
 					"$(SRCROOT)/base",
 					"$(SRCROOT)/data_structures",
 					"$(SRCROOT)",
+					"$(SRCROOT)/algorithm",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};

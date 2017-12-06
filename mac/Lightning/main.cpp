@@ -8,21 +8,15 @@
 
 #include <iostream>
 #include "lt_priority_queue.h"
+#include "lt_sort.h"
+#include <vector>
 
 int main(int argc, const char * argv[]) {
     // insert code here...
 
-    lt::PriorityQueue<int> qu;
-    
-    for (int i = 1; i < 10; i++)
-    {
-        qu.insert(i);
-    }
-    
-    for (int i = 1; i < 10; i++)
-    {
-        std::cout << qu.erase_min() << std::endl;
-    }
+    std::vector<int> vec = { 9, 3, 6, 7, 1, 8, 4, 5, 2};
+  
+    lt::Sort::HeapSort<int>(vec);
     
     return 0;
 }
