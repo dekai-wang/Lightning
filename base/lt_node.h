@@ -23,9 +23,9 @@ public:
         : key(k), data(element), left(left_ptr), right(right_ptr) { height = 0; }
     K                   key;
     T                   data;
+    int                 height;
     TreeNode<K, T>*     left;
     TreeNode<K, T>*     right;
-    int                 height;
 };
 
 };

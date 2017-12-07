@@ -8,6 +8,8 @@
 #ifndef _LT_ALGO_H_
 #define _LT_ALGO_H_
 
+#include "base/lt_noncopyable.h"
+
 namespace lt
 {
 
@@ -36,6 +38,37 @@ struct Less
     {
         return a < b;
     }
+};
+
+class UnionFind : public noncopyable
+{
+public:
+    UnionFind(size_t size)
+    {
+        _set = new uint32_t[size];
+    }
+    virtual ~UnionFind()
+    {
+        delete[] _set;
+    }
+
+    uint32_t Find(int x)
+    {
+        if (_set[x] <= 0)
+            return x;
+        else
+            _set[x] = Find(_set[x]);
+            return _set[x];
+    }
+
+    void Union(uint32_t root1, uint32_t root2)
+    {
+        
+    }
+    
+private:
+    size_t      _size;
+    uint32_t*   _set;    
 };
 
 }

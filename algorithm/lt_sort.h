@@ -24,6 +24,7 @@ public:
     {
         InsertSort<T>(con, std::less<T>() );
     }
+
     template<class T, class Container = std::vector<T>, class Compare>
     static void InsertSort(Container& con, Compare com)
     {
@@ -79,17 +80,59 @@ public:
         }
     }
 
-    template<class T>
-    static void MergeSort();
+    template<class T, class Container = std::vector<T> >
+    static void Merge(Container& con, Container& temp, int lb, int rb, int re)
+    {
+        int le = rb - 1;
+        int pos = lb;
+        int size = re - lb;
+        while ( lb <= le && rb <= re )
+        {
+            if (con[lb] < con[rb])
+                temp[pos++] = con[lb++];
+            else 
+                temp[pos++] = con[rb++];
+        }
+        while( lb <= le )
+            temp[pos++] = con[lb++];
+        while( rb <= re )
+            temp[pos++] = con[rb++];
 
-    template<class T>
-    static void QuickSort();
+        for (size_t i = 0; i <= size; i++, re--)
+            con[re] = temp[re];
+    }
 
-    template<class T>
-    static void ShellSort()
+    template<class T, class Container = std::vector<T> >
+    static void MSort(Container& con, Container& temp, int left, int right)
+    {
+        if (left >= right)
+            return;
+
+        int center = (left + right) / 2;
+        MSort<T>(con, temp, left, center);
+        MSort<T>(con, temp, center + 1, right);
+        Merge<T>(con, temp, left, center + 1, right);
+    }
+
+    template<class T, class Container = std::vector<T> >
+    static void MergeSort(Container& con)
+    {
+        MergeSort<T>(con, std::less<T>());
+    }
+
+    template<class T, class Container = std::vector<T>, class Compare>
+    static void MergeSort(Container& con, Compare com)
+    {
+        Container temp = con; 
+        MSort<T>(con, temp, 0, con.size() - 1);
+    }
+
+    template<class T, class Container = std::vector<T> >
+    static void QuickSort()
     {
 
     }
+
 };
 
 };

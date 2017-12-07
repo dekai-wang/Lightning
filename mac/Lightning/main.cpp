@@ -16,7 +16,7 @@ int main(int argc, const char * argv[]) {
 
     std::vector<int> vec = { 9, 3, 6, 7, 1, 8, 4, 5, 2};
   
-    lt::Sort::HeapSort<int>(vec);
+    lt::Sort::MergeSort<int>(vec);
     
     return 0;
 }

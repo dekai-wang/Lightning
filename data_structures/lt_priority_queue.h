@@ -26,6 +26,7 @@ public:
 
     const T erase_min();
 private:
+    size_t  _capacity;
     size_t  _size;
     T*      _elements;
 };
@@ -35,13 +36,15 @@ template<class T>
 PriorityQueue<T>::PriorityQueue()
 {
     _size = 0;
-    _elements = new T[128];
+    _capacity = 128;
+    _elements = new T[_capacity];
 }
 
 template<class T>
 PriorityQueue<T>::PriorityQueue(size_t size)
 {
-    _elements = new T[size];
+    _capacity = size;
+    _elements = new T[_capacity];
 }
 
 template<class T>
