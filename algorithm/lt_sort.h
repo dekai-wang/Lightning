@@ -64,6 +64,7 @@ public:
     {
         HeapSort<T>(con, std::less<T>());
     }
+
     template<class T, class Container = std::vector<T>, class Compare>
     static void HeapSort(Container& con, Compare com)
     {
